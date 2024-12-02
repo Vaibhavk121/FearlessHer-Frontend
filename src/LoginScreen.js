@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Alert, StyleSheet, Text, Image } from 'react-native';
+import { View, TextInput, TouchableOpacity,Pressable, Button, Alert, StyleSheet, Text, Image } from 'react-native';
 
 const LoginScreen = ({ onLogin, onSwitchToSignup }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     const handleLogin = async () => {
-        const loginResponse = await fetch('http://192.168.70.207:5000/api/login', {
+        const loginResponse = await fetch('https://fearlessher-backend.onrender.com/api/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -27,25 +27,33 @@ const LoginScreen = ({ onLogin, onSwitchToSignup }) => {
 
     return (
         <View style={styles.container}>
-            <Image source={require('./Images/Logo.png')} style={styles.logo} />
-            <Text style={styles.header}>Login now to be Fearless!</Text>
+            <Text style={styles.heroText}>
+                <Text style={styles.welcomeText}>Welcome to{"\n"}</Text>
+                <Text style={styles.fearlessherText}>FearlessHer{"\n"}</Text>
+                <Text style={styles.safeText}>A place where you can feel safe and be fearless...{"\n\n"}</Text>
+            </Text>
+            <Text style={styles.inputNameText}>Your Username</Text>
             <TextInput
-                placeholder="Username"
+                placeholder="Ex: User_name"
                 value={username}
                 onChangeText={setUsername}
                 style={styles.input}
                 autoCapitalize="none"
             />
+            <Text style={styles.inputNameText}>Your Password</Text>
             <TextInput
-                placeholder="Your Password"
+                placeholder=" • • • • • • • • "
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
                 style={styles.input}
+                autoCapitalize="none"
             />
-            <Button title="Login" onPress={handleLogin} color="#6A5ACD" />
-            <Text style={styles.switchText} onPress={onSwitchToSignup}>
-                Don't have an account? Sign Up
+            <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+                <Text style={styles.loginButtonText}>Login</Text>
+            </TouchableOpacity>
+            <Text style={styles.switchText}>
+                Don't have an account? <Text style={styles.signUpText} onPress={onSwitchToSignup}>Sign Up</Text>
             </Text>
         </View>
     );
@@ -58,30 +66,81 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: '#fff',
     },
+    heroText: {
+        marginLeft: 12,
+        marginRight: 12,
+        marginTop: 0,
+        marginBottom: 52,
+    },
+    welcomeText: {
+        fontSize: 20,
+    },
+    fearlessherText: {
+        fontSize: 36,
+        fontWeight: 'bold',
+        color: '#674188',
+    },
+    safeText:{
+        fontSize: 16,
+    },
+    loginButtonContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#f5fcff'
+    },
     logo: {
         width: 250, // Adjust the size as needed
         height: 250, // Adjust the size as needed
         alignSelf: 'center',
         marginBottom: 20,
     },
-    header: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#6A5ACD',
-        marginBottom: 20,
-        textAlign: 'center',
+    inputNameText: {
+        fontSize: 14,
+        //fontWeight: 'bold',
+        //color: '#674188',
+        marginLeft: 12,
+        marginRight: 12,
+        //marginTop: 32,
+        marginBottom: 4,
+        margintop: 16,
+        //textAlign: 'center',
     },
     input: {
+        height: 50,
         borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
+        borderColor: '#674188',
+        borderRadius: 7,
+        padding: 10,
+        marginLeft: 12,
+        marginRight: 12,
+        marginBottom: 20,
+    },
+    loginButton: {
+        height: 50,
+        marginTop: 12,
+        marginLeft: 12,
+        marginRight: 12,
+        borderWidth: 1,
+        borderColor: '#674188',
+        borderRadius: 7,
         padding: 10,
         marginBottom: 10,
+        backgroundColor: '#674188', 
+    },
+    loginButtonText: {
+        color: '#fff',
+        textAlign: 'center',
+        fontSize: 18,
+        fontWeight: 'bold',
     },
     switchText: {
-        color: '#6A5ACD',
         textAlign: 'center',
         marginTop: 20,
+    },
+    signUpText: {
+        color: '#674188', 
+        textDecorationLine: 'underline',
     },
 });
 

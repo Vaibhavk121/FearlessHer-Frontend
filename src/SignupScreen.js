@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Alert, StyleSheet, Text, Image } from 'react-native';
+import {View, TextInput, Button, Alert, StyleSheet, Text, Image, Pressable, TouchableOpacity} from 'react-native';
 
 const SignupScreen = ({ onSignup, onSwitchToLogin }) => {
     const [username, setUsername] = useState('');
@@ -7,7 +7,7 @@ const SignupScreen = ({ onSignup, onSwitchToLogin }) => {
     const [email, setEmail] = useState('');
 
     const handleSignup = async () => {
-        const signupResponse = await fetch('http://192.168.70.207:5000/api/register', {
+        const signupResponse = await fetch('https://fearlessher-backend.onrender.com/api/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -36,32 +36,40 @@ const SignupScreen = ({ onSignup, onSwitchToLogin }) => {
 
     return (
         <View style={styles.container}>
-            <Image source={require('./Images/Logo.png')} style={styles.logo} />
-            <Text style={styles.header}>Create Your Account</Text>
+            <Text style={styles.heroText}>
+                <Text style={styles.signUpText}>Sign Up{"\n"}</Text>
+                <Text style={styles.createText}>Create an account to access all the features of FearlessHer!{"\n\n"}</Text>
+            </Text>
+            <Text style={styles.inputNameText}>Your Email</Text>
             <TextInput
-                placeholder="Email"
+                placeholder="Ex: abc@example.com"
                 value={email}
                 onChangeText={setEmail}
                 style={styles.input}
                 autoCapitalize="none"
             />
+            <Text style={styles.inputNameText}>Your Username</Text>
             <TextInput
-                placeholder="Username"
+                placeholder="Ex: User_name"
                 value={username}
                 onChangeText={setUsername}
                 style={styles.input}
                 autoCapitalize="none"
             />
+            <Text style={styles.inputNameText}>Your Password</Text>
             <TextInput
-                placeholder="Your Password"
+                placeholder=" • • • • • • • • "
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
                 style={styles.input}
+                autoCapitalize="none"
             />
-            <Button title="Sign Up" onPress={handleSignup} color="#6A5ACD" />
-            <Text style={styles.switchText} onPress={onSwitchToLogin}>
-                Already an existing user? Login
+            <TouchableOpacity style={styles.signUpButton} onPress={handleSignup}>
+                <Text style={styles.signUpButtonText}>Sign Up</Text>
+            </TouchableOpacity>
+            <Text style={styles.switchText}>
+                Already have an account? <Text style={styles.logInText} onPress={onSwitchToLogin}>Login</Text>
             </Text>
         </View>
     );
@@ -74,30 +82,72 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: '#fff',
     },
+    heroText: {
+        marginLeft: 12,
+        marginRight: 12,
+        marginTop: 0,
+        marginBottom: 52,
+    },
+    signUpText: {
+        fontSize: 36,
+        fontWeight: 'bold',
+        color: '#674188',
+    },
+    createText:{
+        fontSize: 16,
+    },
     logo: {
         width: 250, // Adjust the size as needed
         height: 250, // Adjust the size as needed
         alignSelf: 'center',
         marginBottom: 20,
     },
-    header: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#6A5ACD',
-        marginBottom: 20,
-        textAlign: 'center',
+    inputNameText: {
+        fontSize: 14,
+        //fontWeight: 'bold',
+        //color: '#674188',
+        marginLeft: 12,
+        marginRight: 12,
+        //marginTop: 32,
+        marginBottom: 4,
+        margintop: 16,
+        //textAlign: 'center',
     },
     input: {
+        height: 50,
         borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
+        borderColor: '#674188',
+        borderRadius: 7,
+        padding: 10,
+        marginLeft: 12,
+        marginRight: 12,
+        marginBottom: 20,
+    },
+    signUpButton: {
+        height: 50,
+        marginTop: 12,
+        marginLeft: 12,
+        marginRight: 12,
+        borderWidth: 1,
+        borderColor: '#674188',
+        borderRadius: 7,
         padding: 10,
         marginBottom: 10,
+        backgroundColor: '#674188', 
+    },
+    signUpButtonText: {
+        color: '#fff',
+        textAlign: 'center',
+        fontSize: 18,
+        fontWeight: 'bold',
     },
     switchText: {
-        color: '#6A5ACD',
         textAlign: 'center',
         marginTop: 20,
+    },
+    logInText: {
+        color: '#674188', 
+        textDecorationLine: 'underline',
     },
 });
 

@@ -1,4 +1,3 @@
-// src/DistressAlertScreen.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, Alert, StyleSheet, TouchableOpacity, Image, Animated } from 'react-native';
 import * as Location from 'expo-location';
@@ -130,11 +129,16 @@ const DistressAlertScreen = ({ token, username, navigation }) => {
                     </MapView>
                 ) : (
                     <>
-                        
-                        <Text style={styles.emergencyText}>Are you in an emergency?</Text>
-                        <Text style={styles.instructionText}>
-                            Press and hold the SOS button for 3 seconds to send a distress signal.
-                        </Text>
+                        <View style={styles.heroContainer}>
+                            <Text style={styles.heroText}>
+                                <Text style={styles.emergencyText}>Are you in an emergency?{"\n"}</Text>
+                                <Text style={styles.instructionText}>
+                                    {"\n"}Press and hold the SOS button for 3 seconds to send a distress signal.{"\n"}
+                                </Text>
+                            </Text>
+                            <Image source={require('../assets/Images/emergencyImage.png')} style={styles.emergencyImage} />
+                        </View>
+                        <View style={styles.content2}>
                         <TouchableOpacity
                             style={styles.sosButton}
                             onLongPress={handleSOSPress}
@@ -143,6 +147,7 @@ const DistressAlertScreen = ({ token, username, navigation }) => {
                             <Text style={styles.sosButtonText}>SOS</Text>
                             <Text style={styles.sosButtonInstruction}>Press 3 seconds</Text>
                         </TouchableOpacity>
+                        </View>
                         <TouchableOpacity
                             style={styles.exploreButton}
                             onPress={() => navigation.navigate('Explore')}
@@ -171,8 +176,9 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        
+
     },
+   
     map: {
         flex: 1,
         width: '100%',
@@ -192,27 +198,44 @@ const styles = StyleSheet.create({
         marginLeft: 25,
         fontSize: 35,
         fontWeight: 'bold',
-        color: '#6A5ACD',
+        color: '#674188',
     },
     icon: {
         width: 40,
         height: 40,
     },
+    heroContainer: {
+        // backgroundColor:"#000000",
+        width: '100%',
+        height: '10px',
+        flex: 0,
+        justifyContent: 'space-evenly',
+        alignItems: 'flex-start',
+        flexDirection: 'row',
+        marginTop: 60,
+        marginBottom: 100,
+    },
+    heroText: {
+        alignSelf: 'stretch',
+        width: '50%',
+        textAlign: 'left',
+    },
     emergencyText: {
+        lineHeight: 28,
         fontSize: 24,
         fontWeight: 'bold',
-        color: '#6A5ACD',
-        marginBottom: 10,
-        textAlign: 'center',
+        color: '#313A51',
     },
     instructionText: {
+        lineHeight: 24,
         fontSize: 16,
-        color: '#555',
-        textAlign: 'center',
-        marginBottom: 20,
+        color: '#313A51',
+    },
+    emergencyImage: {
+        alignSelf: 'stretch',
     },
     sosButton: {
-        backgroundColor: '#6A5ACD',
+        backgroundColor: '#674188',
         borderRadius: 100,
         width: 160,
         height: 160,
@@ -222,7 +245,7 @@ const styles = StyleSheet.create({
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
-            height: 2,
+            height: 10,
         },
         shadowOpacity: 0.3,
         shadowRadius: 4,
@@ -238,11 +261,12 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
     exploreButton: {
-        backgroundColor: '#6A5ACD',
+        backgroundColor: '#674188',
         borderRadius: 10,
         paddingVertical: 15,
         paddingHorizontal: 30,
-        marginTop: 20,
+        marginTop: 30,
+        marginBottom:200,
         alignItems: 'center',
     },
     exploreButtonText: {
