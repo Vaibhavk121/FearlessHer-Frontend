@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {View, TextInput, Button, Alert, StyleSheet, Text, Image, Pressable, TouchableOpacity} from 'react-native';
+import { View, TextInput, Alert, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 const SignupScreen = ({ onSignup, onSwitchToLogin }) => {
     const [username, setUsername] = useState('');
@@ -22,7 +22,6 @@ const SignupScreen = ({ onSignup, onSwitchToLogin }) => {
         }
 
         const { token } = await signupResponse.json();
-        console.log('Token received:', token);
         Alert.alert('Signup successful', 'You have successfully created an account!', [
             {
                 text: 'Login',
@@ -93,25 +92,15 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#674188',
     },
-    createText:{
+    createText: {
         fontSize: 16,
-    },
-    logo: {
-        width: 250, // Adjust the size as needed
-        height: 250, // Adjust the size as needed
-        alignSelf: 'center',
-        marginBottom: 20,
     },
     inputNameText: {
         fontSize: 14,
-        //fontWeight: 'bold',
-        //color: '#674188',
         marginLeft: 12,
         marginRight: 12,
-        //marginTop: 32,
         marginBottom: 4,
         margintop: 16,
-        //textAlign: 'center',
     },
     input: {
         height: 50,
@@ -133,7 +122,7 @@ const styles = StyleSheet.create({
         borderRadius: 7,
         padding: 10,
         marginBottom: 10,
-        backgroundColor: '#674188', 
+        backgroundColor: '#674188',
     },
     signUpButtonText: {
         color: '#fff',
@@ -146,7 +135,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     logInText: {
-        color: '#674188', 
+        color: '#674188',
         textDecorationLine: 'underline',
     },
 });

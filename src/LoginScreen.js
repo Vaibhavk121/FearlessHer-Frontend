@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity,Pressable, Button, Alert, StyleSheet, Text, Image } from 'react-native';
+import { View, TextInput, TouchableOpacity, Alert, StyleSheet, Text } from 'react-native';
 
 const LoginScreen = ({ onLogin, onSwitchToSignup }) => {
     const [username, setUsername] = useState('');
@@ -21,7 +21,6 @@ const LoginScreen = ({ onLogin, onSwitchToSignup }) => {
         }
 
         const { token } = await loginResponse.json();
-        console.log('Token received:', token);
         onLogin(token, username); // Pass the token and username to the parent component
     };
 
@@ -80,31 +79,15 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#674188',
     },
-    safeText:{
+    safeText: {
         fontSize: 16,
-    },
-    loginButtonContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#f5fcff'
-    },
-    logo: {
-        width: 250, // Adjust the size as needed
-        height: 250, // Adjust the size as needed
-        alignSelf: 'center',
-        marginBottom: 20,
     },
     inputNameText: {
         fontSize: 14,
-        //fontWeight: 'bold',
-        //color: '#674188',
         marginLeft: 12,
         marginRight: 12,
-        //marginTop: 32,
         marginBottom: 4,
         margintop: 16,
-        //textAlign: 'center',
     },
     input: {
         height: 50,
@@ -126,7 +109,7 @@ const styles = StyleSheet.create({
         borderRadius: 7,
         padding: 10,
         marginBottom: 10,
-        backgroundColor: '#674188', 
+        backgroundColor: '#674188',
     },
     loginButtonText: {
         color: '#fff',
@@ -139,7 +122,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     signUpText: {
-        color: '#674188', 
+        color: '#674188',
         textDecorationLine: 'underline',
     },
 });

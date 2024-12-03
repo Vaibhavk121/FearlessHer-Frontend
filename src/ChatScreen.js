@@ -10,12 +10,13 @@ const ChatScreen = ({ navigation, token }) => {
     useEffect(() => {
         const fetchMessages = async () => {
             try {
-                const response = await axios.get('http://192.168.70.207:5000/api/messages', {
+                const response = await axios.get('https://fearlessher-backend.onrender.com/api/messages', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setMessages(response.data);
             } catch (error) {
-                console.error('Error fetching messages:', error);
+                console.error('Error fetching messages:', error.message);
+                console.error('Error details:', error);
             }
         };
 
@@ -25,7 +26,7 @@ const ChatScreen = ({ navigation, token }) => {
     const sendMessage = async () => {
         if (message.trim()) {
             try {
-                const response = await axios.post('http://192.168.70.207:5000/api/messages', { text: message }, {
+                const response = await axios.post('https://fearlessher-backend.onrender.com/api/messages', { text: message }, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 console.log('Message sent:', response.data);
@@ -42,33 +43,33 @@ const ChatScreen = ({ navigation, token }) => {
             <NavBar onNotificationPress={() => console.log('Notification pressed')} navigation={navigation} />
 
             <View style={styles.container1}>
-            <View style={styles.header}>
-                <Text style={styles.headerText}>Community Chat</Text>
-                <Text style={styles.subHeaderText}>Share your incidents and experiences</Text>
-            </View>
+                <View style={styles.header}>
+                    <Text style={styles.headerText}>Community Chat</Text>
+                    <Text style={styles.subHeaderText}>Share your incidents and experiences</Text>
+                </View>
 
-            <FlatList
-                data={messages}
-                keyExtractor={(item) => item._id}
-                renderItem={({ item }) => (
-                    <View style={styles.messageContainer}>
-                        <Text style={styles.username}>{item.username}</Text>
-                        <Text style={styles.message}>{item.text}</Text>
-                    </View>
-                )}
-            />
+                <FlatList
+                    data={messages}
+                    keyExtractor={(item) => item._id}
+                    renderItem={({ item }) => (
+                        <View style={styles.messageContainer}>
+                            <Text style={styles.username}>{item.username}</Text>
+                            <Text style={styles.message}>{item.text}</Text>
+                        </View>
+                    )}
+                />
 
-            <TextInput
-                style={styles.input}
-                value={message}
-                onChangeText={setMessage}
-                placeholder="Type a message"
-            />
-            <Button title="Send" onPress={sendMessage} />
+                <TextInput
+                    style={styles.input}
+                    value={message}
+                    onChangeText={setMessage}
+                    placeholder="Type a message"
+                />
+                <Button title="Send" onPress={sendMessage} />
 
-            <View style={styles.footer}>
-                <Text style={styles.footerText}>Be respectful! This is a community chat.</Text>
-            </View>
+                <View style={styles.footer}>
+                    <Text style={styles.footerText}>Be respectful! This is a community chat.</Text>
+                </View>
             </View>
         </View>
     );
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#f9f9f9',
         marginHorizontal: 0,
     },
-    container1:{
+    container1: {
         flex: 1,
         padding: 20,
         backgroundColor: '#f9f9f9',

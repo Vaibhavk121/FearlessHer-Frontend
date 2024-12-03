@@ -56,7 +56,7 @@ const DistressAlertScreen = ({ token, username, navigation }) => {
     const sendAlert = async () => {
         console.log('Sending alert...');
         try {
-            const alertResponse = await fetch('http://192.168.70.207:5000/api/alerts', {
+            const alertResponse = await fetch('https://fearlessher-backend.onrender.com/api/alerts', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -116,16 +116,18 @@ const DistressAlertScreen = ({ token, username, navigation }) => {
                                 pinColor="blue"
                             />
                         )}
-                        {nearbyUsers.map(user => (
-                            <Marker
-                                key={user.userId}
-                                coordinate={{
-                                    latitude: parseFloat(user.location.latitude.split(',')[0]),
-                                    longitude: parseFloat(user.location.latitude.split(',')[1]),
-                                }}
-                                title={`User: ${user.userId}`}
-                            />
-                        ))}
+                        {nearbyUsers && nearbyUsers.length > 0 ? (
+                            nearbyUsers.map(user => (
+                                <Marker
+                                    key={user.userId}
+                                    coordinate={{
+                                        latitude: parseFloat(user.location.latitude.split(',')[0]),
+                                        longitude: parseFloat(user.location.latitude.split(',')[1]),
+                                    }}
+                                    title={`User: ${user.userId}`}
+                                />
+                            ))
+                        ) : null}
                     </MapView>
                 ) : (
                     <>
@@ -139,14 +141,14 @@ const DistressAlertScreen = ({ token, username, navigation }) => {
                             <Image source={require('../assets/Images/emergencyImage.png')} style={styles.emergencyImage} />
                         </View>
                         <View style={styles.content2}>
-                        <TouchableOpacity
-                            style={styles.sosButton}
-                            onLongPress={handleSOSPress}
-                            delayLongPress={2000}
-                        >
-                            <Text style={styles.sosButtonText}>SOS</Text>
-                            <Text style={styles.sosButtonInstruction}>Press 3 seconds</Text>
-                        </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.sosButton}
+                                onLongPress={handleSOSPress}
+                                delayLongPress={2000}
+                            >
+                                <Text style={styles.sosButtonText}>SOS</Text>
+                                <Text style={styles.sosButtonInstruction}>Press 3 seconds</Text>
+                            </TouchableOpacity>
                         </View>
                         <TouchableOpacity
                             style={styles.exploreButton}
@@ -178,7 +180,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
 
     },
-   
+
     map: {
         flex: 1,
         width: '100%',
@@ -266,7 +268,7 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         paddingHorizontal: 30,
         marginTop: 30,
-        marginBottom:200,
+        marginBottom: 200,
         alignItems: 'center',
     },
     exploreButtonText: {
