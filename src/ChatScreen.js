@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { View, TextInput, Button, FlatList, Text, StyleSheet } from 'react-native';
 import axios from 'axios';
 import NavBar from './components/NavBar';
+import io from 'socket.io-client';
 
 const ChatScreen = ({ navigation, token }) => {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
+    const socket = io('https://fearlessher-backend.onrender.com');
 
     useEffect(() => {
         const fetchMessages = async () => {
@@ -21,6 +23,14 @@ const ChatScreen = ({ navigation, token }) => {
         };
 
         fetchMessages();
+
+        socket.on('newMessage', (newMessage) => {
+            setMessages((prevMessages) => [...prevMessages, newMessage]);
+        });
+
+        return () => {
+            socket.disconnect();
+        };
     }, [token]);
 
     const sendMessage = async () => {
@@ -30,7 +40,7 @@ const ChatScreen = ({ navigation, token }) => {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 console.log('Message sent:', response.data);
-                setMessages([...messages, response.data]);
+                socket.emit('sendMessage', response.data);
                 setMessage('');
             } catch (error) {
                 console.error('Error sending message:', error);
@@ -55,6 +65,7 @@ const ChatScreen = ({ navigation, token }) => {
                         <View style={styles.messageContainer}>
                             <Text style={styles.username}>{item.username}</Text>
                             <Text style={styles.message}>{item.text}</Text>
+                            <Text style={styles.timestamp}>{new Date(item.timestamp).toLocaleTimeString()}</Text>
                         </View>
                     )}
                 />
@@ -131,6 +142,11 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#666',
         textAlign: 'center',
+    },
+    timestamp: {
+        fontSize: 12,
+        color: '#999',
+        marginTop: 5,
     },
 });
 

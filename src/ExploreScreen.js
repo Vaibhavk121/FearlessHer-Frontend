@@ -12,17 +12,12 @@ const ExploreScreen = ({ navigation, username }) => {
             <View style={styles.content}>
                 <Text style={styles.greeting}>Good Afternoon,</Text>
                 <Text style={styles.username}>{username}</Text>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => navigation.navigate('DistressAlert')} // Navigate to DistressAlert
-                >
-                    <Text style={styles.buttonText}>Distress Alert Signal</Text>
-                </TouchableOpacity>
+                
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => navigation.navigate('Chat')} // Navigate to ChatScreen
                 >
-                    <Text style={styles.buttonText}>CommUnity Support</Text>
+                    <Text style={styles.buttonText}>Fearless Stories</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.button}
@@ -34,11 +29,9 @@ const ExploreScreen = ({ navigation, username }) => {
                     <Text style={styles.buttonText}>ManUp Tutorials</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonText}>Safety Ratings</Text>
+                    <Text style={styles.buttonText}>Feedback</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonText}>Location History</Text>
-                </TouchableOpacity>
+                
             </View>
         </View>
     );
@@ -66,12 +59,12 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: '#6A5ACD',
         borderRadius: 10,
-        paddingVertical: 15,
+        paddingVertical: 40,
         paddingHorizontal: 20,
         marginVertical: 10,
     },
     buttonText: {
-        fontSize: 18,
+        fontSize: 20,
         color: '#fff',
         textAlign: 'center',
     },

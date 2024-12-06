@@ -37,7 +37,7 @@ export default function App() {
     const handleLogout = (navigation) => {
         setToken(null);
         setUsername('');
-        navigation.navigate('Login');
+        navigation.navigate('LoginScreen');
     };
 
     const handleSignup = (receivedToken) => {

@@ -4,6 +4,7 @@ import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
 import { useFocusEffect } from '@react-navigation/native';
 import NavBar from './components/NavBar';
+import { Accelerometer } from 'expo-sensors';
 
 const DistressAlertScreen = ({ token, username, navigation }) => {
     const [location, setLocation] = useState('Fetching location...');
@@ -32,6 +33,25 @@ const DistressAlertScreen = ({ token, username, navigation }) => {
             setShowMap(false);
         }, [])
     );
+
+    useEffect(() => {
+        const subscription = Accelerometer.addListener(accelerometerData => {
+            const { x, y, z } = accelerometerData;
+            const shakeThreshold = 7.0; // Adjust this threshold as needed
+
+            // Check if the device is shaken
+            if (Math.abs(x) > shakeThreshold || Math.abs(y) > shakeThreshold || Math.abs(z) > shakeThreshold) {
+                handleSOSPress(); // Trigger SOS alert on shake
+            }
+        });
+
+        // Start the accelerometer
+        Accelerometer.setUpdateInterval(100); // Update interval in milliseconds
+
+        return () => {
+            subscription.remove(); // Clean up the subscription on unmount
+        };
+    }, []);
 
     const calculateDistance = (lat1, lon1, lat2, lon2) => {
         const R = 6371; // Radius of the Earth in km
@@ -144,10 +164,10 @@ const DistressAlertScreen = ({ token, username, navigation }) => {
                             <TouchableOpacity
                                 style={styles.sosButton}
                                 onLongPress={handleSOSPress}
-                                delayLongPress={2000}
+                                delayLongPress={10}
                             >
                                 <Text style={styles.sosButtonText}>SOS</Text>
-                                <Text style={styles.sosButtonInstruction}>Press 3 seconds</Text>
+                                <Text style={styles.sosButtonInstruction}>Press 3 seconds or shake</Text>
                             </TouchableOpacity>
                         </View>
                         <TouchableOpacity
@@ -261,6 +281,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#fff',
         marginTop: 5,
+        textAlign:'center',
     },
     exploreButton: {
         backgroundColor: '#674188',
