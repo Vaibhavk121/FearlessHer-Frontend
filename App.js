@@ -11,7 +11,8 @@ import AccountSection from './src/AccountSection';
 import ChatScreen from './src/ChatScreen';
 import SelfDefenseTutorials from './src/SelfDefenseTutorials';
 import MapScreen from './src/MapScreen';
-
+import ManUpScreen from './src/ManUpScreen';
+import NotificationScreen from './src/NotificationScreen';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -121,6 +122,8 @@ export default function App() {
                     {(props) => <ChatScreen {...props} token={token} />}
                 </Stack.Screen>
                 <Stack.Screen name="SelfDefenseTutorials" component={SelfDefenseTutorials} />
+                <Stack.Screen name="ManUp" component={ManUpScreen} />
+                <Stack.Screen name="Notification" component={NotificationScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     );

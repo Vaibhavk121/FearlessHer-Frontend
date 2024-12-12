@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, Button, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
+import NavBar from './components/NavBar';
+import Footer from './components/Footer';
 
 const Account = ({ username, token, onLogout, navigation }) => {
     const [profileImage, setProfileImage] = useState(null);
@@ -87,6 +89,10 @@ const Account = ({ username, token, onLogout, navigation }) => {
 
     return (
         <View style={styles.container}>
+            <NavBar
+                onNotificationPress={() => console.log('Notification pressed')}
+                navigation={navigation}
+            />
             <Text style={styles.title}>Account</Text>
             {loading ? (
                 <ActivityIndicator size="large" color="#6A5ACD" />
@@ -102,6 +108,8 @@ const Account = ({ username, token, onLogout, navigation }) => {
                     <Button title="Logout" onPress={handleLogout} color="red" />
                 </View>
             )}
+            <Footer navigation={navigation} />
+            <Text style={styles.debugText}>NavBar and Footer should be visible here.</Text>
         </View>
     );
 };
@@ -147,6 +155,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#333',
         marginBottom: 10,
+    },
+    debugText: {
+        marginTop: 20,
+        color: 'red',
+        fontWeight: 'bold',
     },
 });
 
